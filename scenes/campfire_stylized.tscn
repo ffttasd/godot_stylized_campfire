@@ -1,0 +1,212 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/stylized_fire_effect.gd" id="1_script"]
+[ext_resource type="Shader" path="res://shaders/stylized_fire.gdshader" id="2_shader"]
+[ext_resource type="Shader" path="res://shaders/fire_ground_glow.gdshader" id="4_ground_glow_shader"]
+[ext_resource type="Shader" path="res://shaders/fire_ember_particle.gdshader" id="5_ember_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_outer_a"]
+resource_local_to_scene = true
+render_priority = 4
+shader = ExtResource("2_shader")
+shader_parameter/detail_strength = 1.95
+shader_parameter/scroll_speed = 0.92
+shader_parameter/fire_height = 0.84
+shader_parameter/fire_shape = 2.35
+shader_parameter/fire_thickness = 0.7
+shader_parameter/fire_sharpness = 0.84
+shader_parameter/intensity = 1.16
+shader_parameter/emission_energy = 1.65
+shader_parameter/edge_glow_strength = 0.7
+shader_parameter/color_variation_strength = 0.18
+shader_parameter/shadow_color = Color(1, 0.16, 0.025, 1)
+shader_parameter/mid_color = Color(1, 0.4, 0.045, 1)
+shader_parameter/light_color = Color(1, 0.72, 0.22, 1)
+shader_parameter/shadow_threshold = 0.08
+shader_parameter/mid_threshold = 0.34
+shader_parameter/light_threshold = 0.72
+shader_parameter/top_cutoff = 0.975
+shader_parameter/noise_octaves = 6
+shader_parameter/noise_lacunarity = 3.0
+shader_parameter/noise_gain = 0.5
+shader_parameter/noise_amplitude = 1.0
+shader_parameter/noise_frequency = 3.2
+
+[sub_resource type="QuadMesh" id="QuadMesh_outer"]
+size = Vector2(1, 1.9)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_outer_b"]
+resource_local_to_scene = true
+render_priority = 5
+shader = ExtResource("2_shader")
+shader_parameter/detail_strength = 2.35
+shader_parameter/scroll_speed = 0.98
+shader_parameter/fire_height = 0.77
+shader_parameter/fire_shape = 2.9
+shader_parameter/fire_thickness = 0.48
+shader_parameter/fire_sharpness = 0.92
+shader_parameter/intensity = 1.24
+shader_parameter/emission_energy = 2.25
+shader_parameter/edge_glow_strength = 0.48
+shader_parameter/color_variation_strength = 0.12
+shader_parameter/shadow_color = Color(1, 0.32, 0.045, 1)
+shader_parameter/mid_color = Color(1, 0.66, 0.08, 1)
+shader_parameter/light_color = Color(1, 0.9, 0.42, 1)
+shader_parameter/shadow_threshold = 0.12
+shader_parameter/mid_threshold = 0.39
+shader_parameter/light_threshold = 0.68
+shader_parameter/top_cutoff = 0.965
+shader_parameter/noise_octaves = 6
+shader_parameter/noise_lacunarity = 3.0
+shader_parameter/noise_gain = 0.5
+shader_parameter/noise_amplitude = 1.0
+shader_parameter/noise_frequency = 3.8
+
+[sub_resource type="QuadMesh" id="QuadMesh_inner"]
+size = Vector2(0.72, 1.68)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_core"]
+resource_local_to_scene = true
+render_priority = 6
+shader = ExtResource("2_shader")
+shader_parameter/detail_strength = 2.8
+shader_parameter/scroll_speed = 1.08
+shader_parameter/fire_height = 0.66
+shader_parameter/fire_shape = 3.4
+shader_parameter/fire_thickness = 0.28
+shader_parameter/fire_sharpness = 0.78
+shader_parameter/intensity = 1.34
+shader_parameter/emission_energy = 3.35
+shader_parameter/edge_glow_strength = 0.28
+shader_parameter/color_variation_strength = 0.08
+shader_parameter/shadow_color = Color(1, 0.58, 0.12, 1)
+shader_parameter/mid_color = Color(1, 0.82, 0.26, 1)
+shader_parameter/light_color = Color(1, 0.96, 0.72, 1)
+shader_parameter/shadow_threshold = 0.18
+shader_parameter/mid_threshold = 0.43
+shader_parameter/light_threshold = 0.62
+shader_parameter/top_cutoff = 0.955
+shader_parameter/noise_octaves = 6
+shader_parameter/noise_lacunarity = 3.0
+shader_parameter/noise_gain = 0.5
+shader_parameter/noise_amplitude = 1.0
+shader_parameter/noise_frequency = 4.2
+
+[sub_resource type="QuadMesh" id="QuadMesh_core"]
+size = Vector2(0.36, 1.32)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ground_glow"]
+resource_local_to_scene = true
+render_priority = 3
+shader = ExtResource("4_ground_glow_shader")
+shader_parameter/inner_color = Color(1, 0.7, 0.22, 0.88)
+shader_parameter/outer_color = Color(1, 0.2, 0.035, 0.36)
+shader_parameter/intensity = 1.34
+shader_parameter/radius = 0.86
+shader_parameter/softness = 0.58
+shader_parameter/noise_strength = 0.24
+shader_parameter/pulse_speed = 2.8
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ground_glow"]
+size = Vector2(2.35, 2.05)
+
+[sub_resource type="Gradient" id="Gradient_ember"]
+offsets = PackedFloat32Array(0, 0.18, 0.56, 0.84, 1)
+colors = PackedColorArray(1, 0.96, 0.72, 0, 1, 0.85, 0.34, 1, 1, 0.36, 0.055, 0.82, 0.85, 0.12, 0.02, 0.36, 0.55, 0.05, 0.015, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ember"]
+gradient = SubResource("Gradient_ember")
+width = 64
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ember"]
+emission_shape = 3
+emission_box_extents = Vector3(0.24, 0.04, 0.24)
+direction = Vector3(0, 1, 0)
+spread = 20.0
+initial_velocity_min = 0.55
+initial_velocity_max = 1.7
+gravity = Vector3(0, 0.74, 0)
+damping_min = 0.08
+damping_max = 0.28
+scale_min = 0.45
+scale_max = 0.9
+color_ramp = SubResource("GradientTexture1D_ember")
+hue_variation_min = -0.03
+hue_variation_max = 0.03
+turbulence_enabled = true
+turbulence_noise_scale = 1.55
+turbulence_influence_min = 0.02
+turbulence_influence_max = 0.08
+turbulence_initial_displacement_max = 0.035
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ember"]
+resource_local_to_scene = true
+render_priority = 7
+shader = ExtResource("5_ember_shader")
+shader_parameter/hot_color = Color(1, 0.84, 0.34, 1)
+shader_parameter/rim_color = Color(1, 0.28, 0.05, 1)
+shader_parameter/radius = 0.54999999143172
+shader_parameter/softness = 0.30999999307088
+shader_parameter/emission_energy = 11.999999731776
+shader_parameter/alpha_multiplier = 1.999999955296
+
+[sub_resource type="QuadMesh" id="QuadMesh_ember"]
+material = SubResource("ShaderMaterial_ember")
+size = Vector2(0.06, 0.06)
+
+[node name="StylizedFireEffect" type="Node3D" unique_id=59144121]
+script = ExtResource("1_script")
+flicker_strength = 1.22
+light_peak_energy = 5.7
+light_peak_range = 5.65
+spark_flash_rate = 8.8
+spark_flash_chance = 0.46
+spark_flash_width = 0.052
+spark_flash_strength = 1.08
+ember_size = 1.0
+
+[node name="FlameOuterA" type="MeshInstance3D" parent="." unique_id=1393253843]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8030699, 0)
+material_override = SubResource("ShaderMaterial_outer_a")
+cast_shadow = 0
+mesh = SubResource("QuadMesh_outer")
+
+[node name="FlameOuterB" type="MeshInstance3D" parent="." unique_id=648180768]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.015, 0.758, 0.006)
+material_override = SubResource("ShaderMaterial_outer_b")
+cast_shadow = 0
+mesh = SubResource("QuadMesh_inner")
+
+[node name="FlameCore" type="MeshInstance3D" parent="." unique_id=28003612]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00601805, 0.57095677, 0.012)
+material_override = SubResource("ShaderMaterial_core")
+cast_shadow = 0
+mesh = SubResource("QuadMesh_core")
+
+[node name="GroundGlow" type="MeshInstance3D" parent="." unique_id=854425565]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.012, 0.04)
+material_override = SubResource("ShaderMaterial_ground_glow")
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_ground_glow")
+
+[node name="EmberParticles" type="GPUParticles3D" parent="." unique_id=1494051521]
+cast_shadow = 0
+amount = 34
+lifetime = 1.55
+preprocess = 1.55
+speed_scale = 2.05
+randomness = 0.58
+fixed_fps = 60
+visibility_aabb = AABB(-1.25, 0, -1.25, 2.5, 3.8, 2.5)
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_ember")
+draw_pass_1 = SubResource("QuadMesh_ember")
+
+[node name="GlowLight" type="OmniLight3D" parent="." unique_id=577249092]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, 0)
+light_color = Color(1, 0.48, 0.16, 1)
+light_energy = 2.05
+light_volumetric_fog_energy = 0.08
+light_size = 0.45
+omni_range = 4.8
+omni_attenuation = 1.12
